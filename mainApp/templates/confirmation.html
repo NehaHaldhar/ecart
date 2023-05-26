@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% load static %}
+
+    {% block title %}
+    <title>E Cart | Order Placed - Online Shop Website </title>
+    {% endblock title %}
+
+    {% block body %}
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="/">Home</a>
+                    <span class="breadcrumb-item active">Order Confirmed</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+  
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-success text-center">Order Confirmed</h4>
+                <div class="text-center">
+                    <a href="/profile/#orders" class="text-info font-weight-bold">Track Your Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock  %}
+
+    

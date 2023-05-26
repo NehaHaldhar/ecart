@@ -1,0 +1,168 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load myCustomFilters %}
+{% block title %}
+<title>E Cart | Profile - Online Shop Website </title>
+{% endblock title %}
+
+{% block body %}
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="/">Home</a>
+                <span class="breadcrumb-item active">Your Profile</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            {% if data.pic %}
+            <img src="{{data.pic.url}}" class="w-100 border rounded-circle mt-5" height="450px">
+            {% else %}
+            <img src="/static/img/pro.png" class="w-100 border rounded-circle mt-5" height="450px" alt="">
+            {% endif %}
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-6">
+                    <h4 class="section-title position-relative text-uppercase text-center mb-3"><span class="bg-secondary pr-3">Your Profile</span></h4>
+                    <div class="rounded bg-light pl-4 py-3 mb-3 w-100">   
+                        <center><table class="ml-5 mt-2">
+                            <tr>
+                                <td class="w-50"><p class=" text-dark font-weight-bold mb-1">Name :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.name}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Username :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.username}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Phone :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.phone}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Email :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.email}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Address 1:</p></td>
+                                <td><p class=" text-dark mb-1">{{data.addressline1}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Address 2:</p></td>
+                                <td><p class=" text-dark mb-1">{{data.addressline2}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Address 3:</p></td>
+                                <td><p class=" text-dark mb-1">{{data.addressline3}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">Pin :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.pin}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">City :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.city}}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class=" text-dark font-weight-bold mb-1">State :</p></td>
+                                <td><p class=" text-dark mb-1">{{data.state}}</p></td>
+                            </tr> 
+                            <tr>
+                                <td colspan="2"><div class="text-center pt-3">
+                                    
+                                </td>
+                            </tr>                       
+                        </table></center>
+                        <div class="text-center"><a href="/update/" class="btn btn-primary border-primary rounded w-50  my-3">Edit Profile</a></div>
+                    </div>     
+        </div>
+    </div>
+</div>
+<div class="container" id="orders">
+    {% if orders%}
+    <h4 class="section-title position-relative text-uppercase text-center mb-3 mt-5"><span
+        class="bg-secondary pr-3">Your Orders</span></h4>
+    {% for item in orders %}
+    <div class="row rounded bg-light pl-4 py-3 mb-3">
+        <!-- for ordered products -->
+        <!-- product brand, product name, product qty, product color, product price, product total -->
+        <div class="col-md-6" >
+            <h5 class=" text-center">Order ID : {{item.orderDetail.id}} | Ordered Products</h5>
+            {% for op in item.orderedProducts %}
+            <div class="cart-item border border-info rounded bg-light pl-4 py-3 mb-3 d-flex flex-row">
+                <div class="mr-3">
+                    <a href="/single-product/{{op.product.id}}"><img class="" src="{{op.product.pic1.url}}" alt=""
+                            style="height: 100px;"></a>
+                </div>
+                <div class="ml-1">
+                    <div>
+                        <p class="small font-weight-bold text-dark mb-1">{{op.product.brand}}</p>
+                    </div>
+                    <div>
+                        <p class="small text-dark mb-1">{{op.product.name}}</p>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="d-flex flex-row mt-1">
+                            <p class="small text-dark font-weight-bold mb-0">Size : {{op.product.size}}</p>
+                            <p class="small text-dark font-weight-bold mb-0 ml-3">Qty : {{op.qty}}</p>
+                            <p class="small text-dark font-weight-bold mb-0 ml-3">Color :{{op.product.color}}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="d-flex flex-row mt-1">
+                            <p class="small text-dark  mb-1 mt-1">Price : &#8377;{{op.product.finalprice}}</p>
+                            <p class="small text-dark font-weight-bold mb-1 mt-1 ml-4">Total : &#8377;{{op.total}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- for order details -->
+        <!-- order id, buyer name,payment mode, payment status, order status, subtotal, shipping,total, date -->
+        <div class="col-md-6">
+            <h5 class=" text-center">Order Details</h5>
+            <div class=" border border-info rounded bg-light pl-4 py-3 mb-3  w-100">   
+                <div class="d-flex flex-row ">
+                    <div class="d-flex flex-column pl-5 ml-2">
+                        <p class=" text-dark font-weight-bold mb-1">Order ID :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Mode Of Payment :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Payment Status :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Order Status :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Subtotal :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Shipping Charges :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Total :</p>
+                        <p class=" text-dark font-weight-bold mb-1">Date of Order :</p>
+                    </div>
+                    <div class="d-flex flex-column pl-5">
+                        <p class=" text-dark mb-1">{{item.orderDetail.id}}</p>
+                        <p class=" text-dark mb-1">{{Request|paymentModeFilter:item.orderDetail.paymentMode}}</p>
+                        <p class=" text-dark mb-1">{{Request|paymentStatusFilter:item.orderDetail.paymentStatus}}</p>
+                        <p class=" text-dark mb-1">{{Request|orderStatusFilter:item.orderDetail.orderStatus}}</p>
+                        <p class=" text-dark mb-1">&#8377;{{item.orderDetail.subtotal}}</p>
+                        <p class=" text-dark mb-1">&#8377;{{item.orderDetail.shipping}}</p>
+                        <p class=" text-dark mb-1">&#8377;{{item.orderDetail.total}}</p>
+                        <p class=" text-dark mb-1">{{item.orderDetail.date}}</p>
+                    </div>
+                </div>
+            </div>
+            {% comment %} <div class=" border border-info rounded bg-light pl-4 py-3 mb-3  w-100">
+                <div>
+                    <p class=" text-dark font-weight-bold mb-1">Delivery Address :</p>
+                    <p class="small text-dark font-weight-bold mb-1">{{data.name}} | {{data.phone}}</p>
+                    <p class="small text-dark mb-1">{{data.addressline1}} {{data.addressline2}}, {{data.city}}- {{data.pin}} , {{data.state}} </p>
+                </div>
+            </div> {% endcomment %}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock%}

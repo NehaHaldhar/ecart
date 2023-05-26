@@ -1,0 +1,164 @@
+{% if orders %}
+    <div class="row">
+        <div class="col-md-6 justify-items-center">
+            {% for item in orders %}
+            <h4 class="section-title position-relative text-uppercase text-center mb-3 ml-5"><span class="bg-secondary pr-3">Order Id : {{item.orderDetail.id}}</span></h4>
+            {% for op in item.orderedProducts %}
+            <div class="cart-item border border-info rounded bg-light pl-4 py-3 mb-3 d-flex flex-row">
+                <div class="mr-3">
+                    <a href="/single-product/op.product.id/"><img class="" src="{{op.product.pic1.url}}" alt="" style="height: 100px;"></a>
+                </div>
+                <div class="ml-1">
+                    <div><p class="small font-weight-bold text-dark mb-1">{{op.product.brand}}</p></div>
+                    <div><p class="small text-dark mb-1">{{op.product.name}}</p></div>
+                    <div class="d-flex flex-row">
+                        <div class="d-flex flex-row mt-1">
+                            <p class="small text-dark font-weight-bold mb-0">Size : {{op.product.size}}</p>
+                            <p class="small text-dark font-weight-bold mb-0 ml-3">Qty : {{op.qty}}</p>
+                            <p class="small text-dark font-weight-bold mb-0 ml-3">Color :{{op.product.color}}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="d-flex flex-row mt-1">
+                            <p class="small text-dark  mb-1 mt-1">Price : &#8377;{{op.product.finalprice}}</p>
+                            <p class="small text-dark font-weight-bold mb-1 mt-1 ml-4">Total : &#8377;{{op.total}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    --------------------------
+    {% if orders %}
+    <div class="row">
+        
+        {% for item in orders %}
+        <div class="col-md-5">
+            <h5 class="bg-light text-dark text-center p-2">Your Orders</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Order Id</th>
+                        <td>{{item.orderDetail.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Mode</th>
+                        <td>{{item.orderDetail.paymentMode}}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Status</th>
+                        <td>{{item.orderDetail.paymentStatus}}</td>
+                    </tr>
+                    <tr>
+                        <th>Order Status</th>
+                        <td>{{item.orderDetail.orderStatus}}</td>
+                    </tr>
+                    <tr>
+                        <th>Subtotal</th>
+                        <td>&#8377;{{item.orderDetail.subtotal}}</td>
+                    </tr>
+                    <tr>
+                        <th>Shipping</th>
+                        <td>&#8377;{{item.orderDetail.shipping}}</td>
+                    </tr>
+                    <tr>
+                        <th>Final</th>
+                        <td>&#8377;{{item.orderDetail.total}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>{{item.orderDetail.date}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-md-7">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Brand/Color/Size</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                    {% for op in item.orderedProducts %}
+                    <tr>
+                        <td><img src="{{op.product.pic1.url}}" width="70px" height="70px" class="rounded" alt=""></td>
+                        <td>{{op.product.name}}</td>
+                        <td>{{op.product.brand}}/{{op.product.color}}/{{op.product.size}}</td>
+                        <td>&#8377;{{op.product.finalprice}}</td>
+                        <td>{{op.qty}}</td>
+                        <td>&#8377;{{op.total}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center">
+        <p>No Order History Found!!!</p>
+        <a href="/shop/All/All/All/" class="btn btn-primary">Shop Now</a>
+    </div>
+    {% endif %}
+
+        </div>
+----------------------------------------
+Your Profile
+
+<div class="bg-light profile-p mb-5 pt-4 ml-5">
+    <table class="table table-sm text-black align-items-center mx-4 pt-4">
+        <tr>
+            <td class="font-weight-bold w-50">Name</td>
+            <td>{{data.name}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold ">Username</td>
+            <td>{{data.username}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">Phone</td>
+            <td>{{data.phone}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">Email</td>
+            <td>{{data.email}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">Addressline1</td>
+            <td>{{data.addressline1}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">Addressline2</td>
+            <td>{{data.addressline2}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">Addressline3</td>
+            <td>{{data.addressline3}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">Pin</td>
+            <td>{{data.pin}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">City</td>
+            <td>{{data.city}}</td>
+        </tr>
+        <tr>
+            <td class="font-weight-bold w-50">State</td>
+            <td>{{data.state}}</td>
+        </tr>
+        <tr>
+            <td colspan=2><a href="/update/" class="btn text-dark border-primary rounded w-75 p-1 my-3">Edit
+                    Profile</a></td>
+        </tr>
+    </table>
+</div>
+     
