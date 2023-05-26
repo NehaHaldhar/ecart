@@ -130,28 +130,48 @@
         <div class="col-md-6">
             <h5 class=" text-center">Order Details</h5>
             <div class=" border border-info rounded bg-light pl-4 py-3 mb-3  w-100">   
-                <div class="d-flex flex-row ">
-                    <div class="d-flex flex-column pl-5 ml-2">
-                        <p class=" text-dark font-weight-bold mb-1">Order ID :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Mode Of Payment :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Payment Status :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Order Status :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Subtotal :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Shipping Charges :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Total :</p>
-                        <p class=" text-dark font-weight-bold mb-1">Date of Order :</p>
-                    </div>
-                    <div class="d-flex flex-column pl-5">
-                        <p class=" text-dark mb-1">{{item.orderDetail.id}}</p>
-                        <p class=" text-dark mb-1">{{Request|paymentModeFilter:item.orderDetail.paymentMode}}</p>
-                        <p class=" text-dark mb-1">{{Request|paymentStatusFilter:item.orderDetail.paymentStatus}}</p>
-                        <p class=" text-dark mb-1">{{Request|orderStatusFilter:item.orderDetail.orderStatus}}</p>
-                        <p class=" text-dark mb-1">&#8377;{{item.orderDetail.subtotal}}</p>
-                        <p class=" text-dark mb-1">&#8377;{{item.orderDetail.shipping}}</p>
-                        <p class=" text-dark mb-1">&#8377;{{item.orderDetail.total}}</p>
-                        <p class=" text-dark mb-1">{{item.orderDetail.date}}</p>
-                    </div>
-                </div>
+                <center>
+                    <table>
+                        <tr>
+                            <td class="w-50"><p class=" text-dark font-weight-bold mb-1">Order ID :</p></td>
+                            <td><p class=" text-dark mb-1">{{item.orderDetail.id}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Mode Of Payment :</p></td>
+                            <td><p class=" text-dark mb-1">{{Request|paymentModeFilter:item.orderDetail.paymentMode}} {{item.orderDetail.paymentMode}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Payment Status :</p></td>
+                            
+                            <td><p class=" text-dark mb-1">{{Request|paymentStatusFilter:item.orderDetail.paymentStatus}} {{item.orderDetail.paymentStatus}}
+                                {% if item.orderDetail.paymentMode == 2 and item.orderDetail.paymentStatus == 1 %}
+                                <a href="/payAgain/{{item.orderDetail.id}}" class="ml-2 btn btn-primary p-1">pay now</a>
+                                {% endif %}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Order Status :</p></td>
+                            <td><p class=" text-dark mb-1">{{Request|orderStatusFilter:item.orderDetail.orderStatus}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Subtotal :</p></td>
+                            <td><p class=" text-dark mb-1">&#8377;{{item.orderDetail.subtotal}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Shipping Charges :</p></td>
+                            <td><p class=" text-dark mb-1">&#8377;{{item.orderDetail.shipping}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Total :</p></td>
+                            <td><p class=" text-dark mb-1">&#8377;{{item.orderDetail.total}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class=" text-dark font-weight-bold mb-1">Date of Order :</p></td>
+                            <td><p class=" text-dark mb-1">{{item.orderDetail.date}}</p></td>
+                        </tr>
+                    </table>
+                </center>
             </div>
             {% comment %} <div class=" border border-info rounded bg-light pl-4 py-3 mb-3  w-100">
                 <div>

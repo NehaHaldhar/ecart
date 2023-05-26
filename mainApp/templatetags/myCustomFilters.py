@@ -29,9 +29,9 @@ def orderStatusFilter(Request,status):
     else:
         return "Delivered"
 
-@register.filter(name="checkForRepayment")
-def checkForRepayment(Request, orderDetails):
-    if(orderDetails.paymentStatus==1 and orderDetails.paymentMode==2):
+@register.filter(name="payAgainFilter")
+def payAgainFilter(Request, order):
+    if(order.paymentStatus==1 and order.paymentMode==2):
         return True
     else:
         return False

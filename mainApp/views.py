@@ -350,7 +350,7 @@ def update_cart_page(Request,num,op):
         for key,values in cart.items():
             subtotal = subtotal+values['total']
             count = count + values['qty']
-        if(subtotal>0 and subtotal<10000):
+        if(subtotal>0 and subtotal<1500):
             shipping = 150
         else:
             shipping =  0
@@ -445,14 +445,14 @@ def place_order(Request):
         if(subtotal==0):
             return HttpResponseRedirect("/cart/")
         print(mode)
-        order_details = OrderDetail()
+        od = OrderDetail()
         
-        order_details.buyer = buyer
-        # order_details.paymentMode = mode
-        order_details.subtotal = subtotal
-        order_details.shipping = shipping
-        order_details.total = total
-        order_details.save()
+        od.buyer = buyer
+        # od.paymentMode = mode
+        od.subtotal = subtotal
+        od.shipping = shipping
+        od.total = total
+        od.save()
         
         cart = Request.session.get("cart",None)
         for key,values in cart.items():
@@ -461,7 +461,7 @@ def place_order(Request):
             
             ordered_product = OrderedProduct()
             
-            ordered_product.orderDetails = order_details    # object of OrderDetail(ForeignKey)
+            ordered_product.orderDetails = od    # object of OrderDetail(ForeignKey)
             ordered_product.product = cart_products
             ordered_product.qty = values['qty']
             ordered_product.total = values['total']
@@ -476,7 +476,7 @@ def place_order(Request):
         if(mode=="1"):
             subject = 'Order Has Been Placed : Team E-Cart'
             message = f'''Hello {buyer.username},
-                        Your order has been Placed with order ID :{order_details.id}
+                        Your order has been Placed with order ID :{od.id}
                         Track your Order http://localhost:8000/profile/
                         '''
             email_from = settings.EMAIL_HOST_USER
@@ -484,29 +484,27 @@ def place_order(Request):
             send_mail( subject, message, email_from, recipient_list )
             return HttpResponseRedirect("/confirmation/")
         else:
-            orderAmount = order_details.total*100
+            orderAmount = od.total*100
             orderCurrency = "INR"
             paymentOrder = client.order.create(dict(amount=orderAmount,currency=orderCurrency,payment_capture=1))
             paymentId = paymentOrder['id']
-            order_details.paymentMode=2
-            order_details.save()
-            return render(Request,"pay.html",{
-                "amount":orderAmount,
-                "api_key":RAZORPAY_API_KEY,
-                "order_id":paymentId,
-                "User":buyer
-            })
+            od.paymentMode=2
+            od.save()
+            return render(Request,"pay.html",{"amount":orderAmount,"api_key":RAZORPAY_API_KEY,"order_id":paymentId,"User":buyer,"orderId":9999999999})
     else:
         return HttpResponseRedirect("/checkout/")
-    
+ 
 @login_required(login_url='/login/')
-def paymentSuccessPage(Request,rppid,rpoid,rpsid):
+def paymentSuccessPage(Request,rppid,rpoid,rpsid,orderId):
     buyer = Buyer.objects.get(username=Request.user)
-    od = OrderDetail.bjects.filter(user=buyer)
-    od = od[::-1]
-    od = od[0]
+    if(orderId==9999999999):
+        od = OrderDetail.bjects.filter(buyer=buyer)
+        od = od[::-1]
+        od = od[0]
+    else:
+        od = OrderDetail.bjects.filter(id=orderId)
     od.rppid = rppid
-    od.paymentStatus = 2
+    od.paymentStatus = 2    
     od.save()
     
     subject = 'Order Has Been Placed : Team E-Cart'
@@ -518,8 +516,24 @@ def paymentSuccessPage(Request,rppid,rpoid,rpsid):
     recipient_list = [buyer.email, ]
     send_mail( subject, message, email_from, recipient_list )
     return HttpResponseRedirect('/confirmation/')
-    
 
+@login_required(login_url="/login/")
+def payment_pending(Request,orderId):
+    print(f"\n\n\n{orderId}\n\n\n")
+    try:
+        od = OrderDetail.objects.get(id=orderId)
+        buyer = Buyer.objects.get(username=Request.user)
+        orderAmount = od.total*100
+        orderCurrency = "INR"
+        paymentOrder = client.order.create(dict(amount=orderAmount,currency=orderCurrency,payment_capture=1))
+        paymentId = paymentOrder['id']
+        od.paymentMode=2
+        od.save()
+        
+        return render(Request,"pay.html",{"amount":orderAmount,"api_key":RAZORPAY_API_KEY,"order_id":paymentId,"User":buyer,"orderId":9999999999})
+    except:
+        return HttpResponseRedirect("/profile/")
+    
 @login_required(login_url="/login/")
 def confirmation(Request):
     return render(Request,"confirmation.html")
