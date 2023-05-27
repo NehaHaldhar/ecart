@@ -20,15 +20,15 @@
 
 
     <!-- Cart Start -->
-    <div class="container-fluid">
+    <div class="container">
         {% if request.session.count %}
-        <div class="row px-xl-5 mx-5">
-            <div class="col-lg-8 table-responsive mb-5">
+        <div class="row">
+            <div class="col-md-8 mb-5">
                 <h5 class="section-title position-relative text-center text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Items</span></h5>
                 {% for key,value in cart.items %}
-                <div class="cart-item border border-info rounded bg-light pl-4 py-3 mb-3 d-flex flex-row position-relative">
+                <div class="cart-item border border-info rounded bg-light py-3 mb-3 d-flex flex-row position-relative">
                     <div class="mr-3">
-                        <a href="/single-product/{{value.id}}"><img class="" src="{{value.pic}}" alt="" style="height: 130px;"></a>
+                        <a href="/single-product/{{value.id}}"><img class="p-2" src="{{value.pic}}" alt="" style="height: 130px;"></a>
                     </div>
                     <div class="ml-1">
                         <div><p class="small font-weight-bold text-dark mb-1">{{value.brand}}</p></div>
@@ -103,7 +103,7 @@
                 </table> -->
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <!-- <form class="mb-30" action="">
                     <div class="input-group">
                         <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
