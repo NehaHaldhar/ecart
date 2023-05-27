@@ -477,7 +477,7 @@ def place_order(Request):
             subject = 'Order Has Been Placed : Team E-Cart'
             message = f'''Hello {buyer.username},
                         Your order has been Placed with order ID :{od.id}
-                        Track your Order http://localhost:8000/profile/
+                        Track your Order https://nehahaldar.pythonanywhere.com/profile/#orders
                         '''
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [buyer.email, ]
@@ -496,13 +496,13 @@ def place_order(Request):
  
 @login_required(login_url='/login/')
 def paymentSuccessPage(Request,rppid,rpoid,rpsid,orderId):
-    buyer = Buyer.objects.get(username=Request.user)
+    buyer = Buyer.objects.get(username=Request.user.username)
     if(orderId==9999999999):
-        od = OrderDetail.bjects.filter(buyer=buyer)
+        od = OrderDetail.objects.filter(buyer=buyer)
         od = od[::-1]
         od = od[0]
     else:
-        od = OrderDetail.bjects.filter(id=orderId)
+        od = OrderDetail.objects.get(id=orderId)
     od.rppid = rppid
     od.paymentStatus = 2    
     od.save()
@@ -510,7 +510,7 @@ def paymentSuccessPage(Request,rppid,rpoid,rpsid,orderId):
     subject = 'Order Has Been Placed : Team E-Cart'
     message = f'''Hello {buyer.username},
                 Your order has been Placed with order ID :{od.id}
-                Track your Order http://localhost:8000/profile/
+                Track your Order https://nehahaldar.pythonanywhere.com/profile/#orders
                 '''
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [buyer.email, ]
@@ -522,7 +522,7 @@ def payment_pending(Request,orderId):
     print(f"\n\n\n{orderId}\n\n\n")
     try:
         od = OrderDetail.objects.get(id=orderId)
-        buyer = Buyer.objects.get(username=Request.user)
+        buyer = Buyer.objects.get(username=Request.user.username)
         orderAmount = od.total*100
         orderCurrency = "INR"
         paymentOrder = client.order.create(dict(amount=orderAmount,currency=orderCurrency,payment_capture=1))
@@ -530,7 +530,7 @@ def payment_pending(Request,orderId):
         od.paymentMode=2
         od.save()
         
-        return render(Request,"pay.html",{"amount":orderAmount,"api_key":RAZORPAY_API_KEY,"order_id":paymentId,"User":buyer,"orderId":9999999999})
+        return render(Request,"pay.html",{"amount":orderAmount,"api_key":RAZORPAY_API_KEY,"order_id":paymentId,"User":buyer,"orderId":orderId})
     except:
         return HttpResponseRedirect("/profile/")
     
