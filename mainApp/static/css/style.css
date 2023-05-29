@@ -606,6 +606,8 @@ pre code {
   margin-left: auto;
 }
 
+
+
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px;
@@ -1033,6 +1035,7 @@ pre code {
 }
 
 @media (min-width: 768px) {
+  
   .col-md {
     flex-basis: 0;
     flex-grow: 1;
@@ -4118,8 +4121,64 @@ input[type="button"].btn-block {
     padding-left: 0;
   }
 }
+/* 
+@media (min-width: 390px){
+  .mynav{
+    display: initial;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 576px){
+  .mynav{
+    display: initial;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 576px){
+  .mynav{
+    display: initial;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+} */
 
 @media (min-width: 576px) {
+  .navbar-expand-sm {
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+  }
+  .navbar-expand-sm .navbar-nav {
+    flex-direction: row;
+  }
+  .navbar-expand-sm .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+  .navbar-expand-sm .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  .navbar-expand-sm > .container,
+  .navbar-expand-sm > .container-fluid, .navbar-expand-sm > .container-sm, .navbar-expand-sm > .container-md, .navbar-expand-sm > .container-lg, .navbar-expand-sm > .container-xl {
+    flex-wrap: nowrap;
+  }
+  .navbar-expand-sm .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+  }
+  .navbar-expand-sm .navbar-toggler {
+    display: none;
+  }
+}
+
+@media (min-width: 340px) {
   .navbar-expand-sm {
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -9774,7 +9833,7 @@ a.text-dark:hover, a.text-dark:focus {
   position: fixed;
   display: none;
   right: 30px;
-  bottom: 30px;
+  bottom: 50px;
   z-index: 11;
   animation: action 1s infinite alternate;
 }

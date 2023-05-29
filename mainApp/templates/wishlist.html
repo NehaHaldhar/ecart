@@ -28,33 +28,29 @@
             <div class="w-100 auto mb-4"><h4 class="bg-light text-center text-primary p-2">Wishlist</h4></div>
                     {% if wishlist %}
                     {% for item in wishlist %}
-                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="col-lg-2 col-md-3 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4 position-relative">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="w-100" height="350px" src="{{item.product.pic1.url}}" alt="">
+                                <img class="w-100 img-height" src="{{item.product.pic1.url}}" alt="">
                             </div>
+                            <a class="h6 text-decoration-none " href="/single-product/{{item.product.id}}">
                             <div class="text-center py-3">
+                                <div style="height:25px"><p class="small text-dark font-weight-bold text-truncate" >{{item.product.brand.name}}</p></div>
                                 <div style="height:50px">
-                                    <a class="h6 text-decoration-none text-truncate p-1" href="/single-product/{{item.product.id}}">{{item.product.name}}</a>
+                                    <p class="small text-dark text-truncate px-1">{{item.product.name}}</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>&#8377;{{item.product.finalprice}}</h5><h6 class="text-muted ml-2"><del class="text-danger">&#8377;{{item.product.baseprice}}</del><sup class="text-success">{{item.product.discount}}% off</sup></h6> 
+                                    <h5 class="small font-weight-bold">&#8377;{{item.product.finalprice}}</h5><h6 class=" ml-2 small"><del class="text-danger">&#8377;{{item.product.baseprice}}</del><sup class="text-success">{{item.product.discount}}% off</sup></h6> 
                                 </div>
-                                <div class="d-flex align-items-center p-3">
-                                    <a class="btn btn-primary w-100 p-0 py-1" href="/add-to-cart/{{item.product.id}}/"><i class="fa fa-shopping-cart"></i> Add To Cart</a>
+                                <div class="d-flex align-items-center p-2">
+                                    <a class="btn btn-primary btn-sm w-100 p-0 py-1" href="/add-to-cart/{{item.product.id}}/"><i class="fa fa-shopping-cart"></i> Add To Cart</a>
                                 </div>
                                 <div>
                                     <a href="/remove-from-wishlist/{{item.id}}/" class="bg-secondary btn-sm cross rounded-circle"><i class="fa fa-times p-0"></i></a>
                                 </div>
-                                {% comment %} <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
-                                </div> {% endcomment %}
+                                
                             </div>
+                        </a>
                         </div>
                     </div>
                     {% endfor %}

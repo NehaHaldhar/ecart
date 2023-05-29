@@ -61,10 +61,11 @@
         </div>
     </div>
     <!-- Topbar End -->
-
+    
 
     <!-- Navbar Start -->
     <div class="container-fluid my-bgcolor mb-30 sticky-top">
+        
         <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block ">
                 <a class="btn d-flex align-items-center justify-content-between my-bgcolors w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
@@ -100,8 +101,11 @@
                     </div>
                 </nav>
             </div>
+            
             <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg my-bgcolor navbar-dark py-3 py-lg-0 px-0">
+                
+                <nav class="navbar navbar-expand-lg my-bgcolor navbar-dark py-3 py-lg-0 px-0 ">
+                    
                     <a href="" class="text-decoration-none d-block d-lg-none">
                         <span class="h1 text-uppercase ecolor my-bgcolor px-2">E</span>
                         <span class="h1 text-uppercase text-light my-bgcolors px-2 ml-n1">Cart</span>
@@ -120,6 +124,7 @@
                                 <div class="dropdown-menu my-bgcolors rounded-0 border-0 m-0">
                                     <a href="/profile/" class="dropdown-item my-bgcolors">Profile</a>
                                     <a href="/cart/" class="dropdown-item my-bgcolors">Cart</a>
+                                    <a href="/wishlist/" class="dropdown-item my-bgcolors">Wishlist</a>
                                     <a href="/logout/" class="dropdown-item my-bgcolors">logout</a>
                                 </div>
                             </div>
@@ -128,6 +133,7 @@
                             {% endif %}
                             
                         </div>
+                       
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="/wishlist/" class="btn px-0">
                                 <i class="fas fa-heart text-light"></i>
@@ -142,10 +148,23 @@
                 </nav>
             </div>
         </div>
+        <div class="row bg-light">
+            <div class="col-lg-12 d-block d-lg-none my-2 ml-2 w-100">
+                <form action="/search/" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control w-25" name="search" placeholder="Search for products">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn-primary px-3 border-0">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
     <!-- Navbar End -->
-
-
     <!-- Carousel Start -->
     {% block body %}
     <div class="container-fluid mb-3">
@@ -251,7 +270,7 @@
         <h2 class="text-center section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
         <div class="row px-xl-5 pb-3 mt-4">
             {% for item in subcategory %}
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 pb-1">
+            <div class="col-lg-2 col-md-3 col-sm-6 pb-1">
                 <a class="text-decoration-none" href="/shop/All/{{item.name}}/All">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden" style="width: 80px; height: 80px;">
@@ -259,7 +278,6 @@
                         </div>
                         <div class="flex-fill pl-3">
                             <h6>{{item.name}}</h6>
-                            <small class="text-body"></small>
                         </div>
                     </div>
                 </a>
@@ -275,10 +293,10 @@
         <h2 class="section-title position-relative text-center text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Latest Products</span></h2>
         <div class="row px-xl-5 mt-4">
             {% for item in product %}
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 pb-1">
+                    <div class="col-lg-2 col-md-4 col-sm-6  pb-1">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="w-100" height="240px" src="{{item.pic1.url}}" alt="">
+                                <img class="w-100 " height="240px"  src="{{item.pic1.url}}" alt="">
                                 <div class="product-action">
                                     <a class="btn btn-outline-dark btn-square" href="/add-to-cart/{{item.id}}/"><i class="fa fa-shopping-cart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href="/add-to-wishlist/{{item.id}}/"><i class="far fa-heart"></i></a>
@@ -288,8 +306,8 @@
                             <a class="text-decoration-none text-truncate" href="/single-product/{{item.id}}">
                             <div class="text-center py-2">
                                <div style="height:25px"><p class="small text-dark font-weight-bold text-truncate" >{{item.brand.name}}</p></div>
-                                <div style="height:45px"><p class="small text-dark text-truncate px-1">{{item.name}}</p></div>
-                                <div class="d-flex align-items-center justify-content-center mt-1">
+                                <div style="height:55px"><p class="small text-dark text-truncate px-1">{{item.name}}</p></div>
+                                <div style="height:25px" class="d-flex align-items-center justify-content-center mt-1">
                                     <h5 class="small font-weight-bold">&#8377;{{item.finalprice}}</h5><h6 class=" ml-2 small"><del class="text-danger">&#8377;{{item.baseprice}}</del><sup class="text-success">{{item.discount}}% off</sup></h6> 
                                 </div>
                             </div>
@@ -355,17 +373,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
-                        <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="mail" name="semail" class="form-control" placeholder="Your Email Address">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary">Sign Up</button>
-                                </div>
-                            </div>
-                        </form>
-                        <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
+                        <h5 class="text-secondary text-uppercase mb-4">Follow Us</h5>
                         <div class="d-flex">
                             <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -376,22 +384,33 @@
                 </div>
             </div>
         </div>
-        <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-warning" href="#">Domain</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-warning" href="https://htmlcodex.com">HTML Codex</a>
-                    <br>Distributed By: <a class="text-warning" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="static/img/payments.png" alt="">
-            </div>
-        </div>
+        
     </div>
     <!-- Footer End -->
-
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-expand-sm bg-light fixed-bottom d-block d-lg-none">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav mb-lg-0 d-flex justify-content-between w-100">
+              <li class="nav-item">
+                <a href="/" class="nav-link"><i class="fas fa-house text-dark"></i></a>
+              </li>
+              <li class="nav-item">
+                <a href="/shop/All/All/All/" class="nav-link"><i class="fas fa-shop text-dark"></i></a>
+              </li>
+              <li class="nav-item">
+                <a href="/profile/" class="nav-link"><i class="fas fa-user text-dark"></i></a>
+              </li>
+              <li class="nav-item">
+                <a href="/wishlist/" class="nav-link"><i class="fas fa-heart text-dark"></i></a>
+              </li>
+              <li class="nav-item">
+                <a href="/cart/" class="nav-link"><i class="fas fa-shopping-cart text-dark"></i></a>
+              </li>
+            </ul>
+        
+          </div>
+        </div>
+      </nav>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
